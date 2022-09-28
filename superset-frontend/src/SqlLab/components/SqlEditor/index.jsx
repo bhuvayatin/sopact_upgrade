@@ -134,7 +134,12 @@ const StyledSidebar = styled.div`
     ${({ theme, hide }) =>
       hide ? 'transparent' : theme.colors.grayscale.light2};
 `;
-
+const Leftdiv = styled.div`
+  background: ${({ theme }) => theme.colors.primary.base};
+  width: 50px;
+  min-height: 100vh;
+  float: left;
+`;
 const propTypes = {
   actions: PropTypes.object.isRequired,
   tables: PropTypes.array.isRequired,
@@ -649,76 +654,79 @@ const SqlEditor = ({
     ? 'schemaPane-exit-done'
     : 'schemaPane-enter-done';
   return (
-    <div ref={sqlEditorRef} className="SqlEditor">
-      <CSSTransition classNames="schemaPane" in={!hideLeftBar} timeout={300}>
-        <ResizableSidebar
-          id={`sqllab:${queryEditor.id}`}
-          minWidth={SQL_EDITOR_LEFTBAR_WIDTH}
-          initialWidth={SQL_EDITOR_LEFTBAR_WIDTH}
-          enable={!hideLeftBar}
+    <>
+      <Leftdiv />
+      <div ref={sqlEditorRef} className="SqlEditor">
+        <CSSTransition classNames="schemaPane" in={!hideLeftBar} timeout={300}>
+          <ResizableSidebar
+            id={`sqllab:${queryEditor.id}`}
+            minWidth={SQL_EDITOR_LEFTBAR_WIDTH}
+            initialWidth={SQL_EDITOR_LEFTBAR_WIDTH}
+            enable={!hideLeftBar}
+          >
+            {adjustedWidth => (
+              <StyledSidebar
+                className={`schemaPane ${leftBarStateClass}`}
+                width={adjustedWidth}
+                hide={hideLeftBar}
+              >
+                <SqlEditorLeftBar
+                  database={database}
+                  queryEditor={queryEditor}
+                  tables={tables}
+                  actions={actions}
+                  setEmptyState={bool => setShowEmptyState(bool)}
+                />
+              </StyledSidebar>
+            )}
+          </ResizableSidebar>
+        </CSSTransition>
+        {showEmptyState ? (
+          <EmptyStateBig
+            image="vector.svg"
+            title={t('Select a database to write a query')}
+            description={t(
+              'Choose one of the available databases from the panel on the left.',
+            )}
+          />
+        ) : (
+          queryPane()
+        )}
+        <Modal
+          visible={showCreateAsModal}
+          title={t(createViewModalTitle)}
+          onHide={() => setShowCreateAsModal(false)}
+          footer={
+            <>
+              <Button onClick={() => setShowCreateAsModal(false)}>
+                {t('Cancel')}
+              </Button>
+              {createAs === CtasEnum.TABLE && (
+                <Button
+                  buttonStyle="primary"
+                  disabled={ctas.length === 0}
+                  onClick={createTableAs}
+                >
+                  {t('Create')}
+                </Button>
+              )}
+              {createAs === CtasEnum.VIEW && (
+                <Button
+                  buttonStyle="primary"
+                  disabled={ctas.length === 0}
+                  onClick={createViewAs}
+                >
+                  {t('Create')}
+                </Button>
+              )}
+            </>
+          }
         >
-          {adjustedWidth => (
-            <StyledSidebar
-              className={`schemaPane ${leftBarStateClass}`}
-              width={adjustedWidth}
-              hide={hideLeftBar}
-            >
-              <SqlEditorLeftBar
-                database={database}
-                queryEditor={queryEditor}
-                tables={tables}
-                actions={actions}
-                setEmptyState={bool => setShowEmptyState(bool)}
-              />
-            </StyledSidebar>
-          )}
-        </ResizableSidebar>
-      </CSSTransition>
-      {showEmptyState ? (
-        <EmptyStateBig
-          image="vector.svg"
-          title={t('Select a database to write a query')}
-          description={t(
-            'Choose one of the available databases from the panel on the left.',
-          )}
-        />
-      ) : (
-        queryPane()
-      )}
-      <Modal
-        visible={showCreateAsModal}
-        title={t(createViewModalTitle)}
-        onHide={() => setShowCreateAsModal(false)}
-        footer={
-          <>
-            <Button onClick={() => setShowCreateAsModal(false)}>
-              {t('Cancel')}
-            </Button>
-            {createAs === CtasEnum.TABLE && (
-              <Button
-                buttonStyle="primary"
-                disabled={ctas.length === 0}
-                onClick={createTableAs}
-              >
-                {t('Create')}
-              </Button>
-            )}
-            {createAs === CtasEnum.VIEW && (
-              <Button
-                buttonStyle="primary"
-                disabled={ctas.length === 0}
-                onClick={createViewAs}
-              >
-                {t('Create')}
-              </Button>
-            )}
-          </>
-        }
-      >
-        <span>{t('Name')}</span>
-        <Input placeholder={createModalPlaceHolder} onChange={ctasChanged} />
-      </Modal>
-    </div>
+          <span>{t('Name')}</span>
+          <Input placeholder={createModalPlaceHolder} onChange={ctasChanged} />
+        </Modal>
+      </div>
+    </>
   );
 };
 

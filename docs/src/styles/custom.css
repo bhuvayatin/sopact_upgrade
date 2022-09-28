@@ -27,11 +27,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 :root {
-  --ifm-color-primary: #20a7c9;
-  --ifm-color-primary-dark: #1985a0;
+  --ifm-color-primary: #353da9;
+  --ifm-color-primary-dark: #353da9;
   --ifm-color-primary-darker: #t;
   --ifm-color-primary-darkest: #ffffff;
-  --ifm-color-primary-light: #79cade;
+  --ifm-color-primary-light: #353da9;
   --ifm-color-primary-lighter: #a5dbe9;
   --ifm-color-primary-lightest: #d2edf4;
   --ifm-code-font-size: 95%;

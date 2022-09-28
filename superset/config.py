@@ -102,7 +102,7 @@ PACKAGE_JSON_FILE = pkg_resources.resource_filename(
 #     "type": "image/png"
 #     "rel": "icon"
 # },
-FAVICONS = [{"href": "/static/assets/images/favicon.png"}]
+FAVICONS = [{"href": "https://www.sopact.com/hubfs/soapct_fav-13-1.png"}]
 
 
 def _try_json_readversion(filepath: str) -> Optional[str]:
@@ -182,9 +182,9 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 SECRET_KEY = CHANGE_ME_SECRET_KEY
 
 # The SQLAlchemy connection string.
-SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(DATA_DIR, "superset.db")
+# SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(DATA_DIR, "superset.db")
 # SQLALCHEMY_DATABASE_URI = 'mysql://myapp@localhost/myapp'
-# SQLALCHEMY_DATABASE_URI = 'postgresql://root:password@localhost/myapp'
+SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:postgres@localhost/sopact'
 
 # In order to hook up a custom password store for all SQLACHEMY connections
 # implement a function that takes a single argument of type 'sqla.engine.url',
@@ -268,10 +268,10 @@ SCHEDULED_QUERIES: Dict[str, Any] = {}
 # GLOBALS FOR APP Builder
 # ------------------------------
 # Uncomment to setup Your App name
-APP_NAME = "Superset"
+APP_NAME = "Sopact"
 
 # Specify the App icon
-APP_ICON = "/static/assets/images/superset-logo-horiz.png"
+APP_ICON = "https://www.sopact.com/hubfs/sopact_logo%20(1).png"
 
 # Specify where clicking the logo would take the user
 # e.g. setting it to '/' would take the user to '/superset/welcome/'
@@ -426,10 +426,10 @@ DEFAULT_FEATURE_FLAGS: Dict[str, bool] = {
     "DASHBOARD_FILTERS_EXPERIMENTAL": False,
     "GLOBAL_ASYNC_QUERIES": False,
     "VERSIONED_EXPORT": True,
-    "EMBEDDED_SUPERSET": False,
+    "EMBEDDED_SUPERSET": True,
     # Enables Alerts and reports new implementation
     "ALERT_REPORTS": False,
-    "DASHBOARD_RBAC": False,
+    "DASHBOARD_RBAC": True,
     "ENABLE_EXPLORE_DRAG_AND_DROP": True,
     "ENABLE_FILTER_BOX_MIGRATION": False,
     "ENABLE_ADVANCED_DATA_TYPES": False,

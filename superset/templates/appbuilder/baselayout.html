@@ -28,15 +28,16 @@
     {% endblock %}
 
     {% block uncontained %}{% endblock %}
-
-    <div class="container">
-      <div class="row">
+    <div id="append">
+    <div class="container" id="forlogindiv">
+      <div class="row h-full">
           {% block messages %}
             {% include 'superset/flash_wrapper.html' %}
           {% endblock %}
           {% block content %}
           {% endblock %}
       </div>
+    </div>
     </div>
     <div class="container-fluid">
         {% block content_fluid %}
@@ -45,12 +46,32 @@
     <div id="app" data-bootstrap="{{ bootstrap_data() }}"></div>
 
     {% block footer %}
-        <footer>
+        <footer id="footer-container">
           <div class="img-rounded nav-fixed-bottom">
               <div class="container-fluid">
                   {% include 'appbuilder/footer.html' %}
               </div>
           </div>
         </footer>
+        <script>
+          console.log(window.location.pathname);
+          var path = window.location.pathname;
+          var element = document.getElementById("forlogindiv");
+          var appenddiv = document.getElementById("append");
+          var footer = document.getElementById("footer-container");
+          if (path == "/login/") {
+            element.classList.remove("container");
+            element.style.maxWidth = "100%";
+            element.style.overflowX = "hidden";
+            footer.style.display ="none";
+            element.style.maxHeight = "94vh";
+            element.style.height = "93vh";
+          } else {
+            appenddiv.style.display = "flex";
+            var innerDiv = document.createElement("div");
+            innerDiv.className = "leftdiv";
+            element.parentNode.insertBefore(innerDiv, element);
+          }
+        </script>
     {% endblock %}
 {% endblock %}

@@ -202,7 +202,7 @@ const CarouselSection = styled('div')`
         margin: 10px;
         color: #666;
         border: 1px solid #888;
-        background-color: #20a7c911;
+        background-color: #353da9de;
         border-radius: 3px;
         padding: 16px;
         transition: all 0.25s;
@@ -228,7 +228,7 @@ const CarouselSection = styled('div')`
         }
         &.active {
           background: red;
-          background: #20a7c933;
+          background: #353da9de;
           ${[mq[0]]} {
             > span {
               display: block;

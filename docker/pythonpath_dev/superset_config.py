@@ -82,7 +82,7 @@ DATA_CACHE_CONFIG = CACHE_CONFIG
 
 class CeleryConfig(object):
     BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_CELERY_DB}"
-    CELERY_IMPORTS = ("superset.sql_lab",)
+    CELERY_IMPORTS = ("superset.sql_lab","superset.tasks", "superset.tasks.sync_status")
     CELERY_RESULT_BACKEND = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_RESULTS_DB}"
     CELERYD_LOG_LEVEL = "DEBUG"
     CELERYD_PREFETCH_MULTIPLIER = 1
@@ -95,6 +95,14 @@ class CeleryConfig(object):
         "reports.prune_log": {
             "task": "reports.prune_log",
             "schedule": crontab(minute=10, hour=0),
+        },
+        "sync_status.updater": {
+            "task": "sync_status.updater",
+            "schedule": crontab(minute="*", hour="*"),
+        },
+        "sync_status.cleanup": {
+            "task": "sync_status.cleanup",
+            "schedule": crontab(minute="*", hour="*"),
         },
     }
 

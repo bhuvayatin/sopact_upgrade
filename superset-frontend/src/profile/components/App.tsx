@@ -36,58 +36,69 @@ const StyledTabPane = styled(Tabs.TabPane)`
   padding: ${({ theme }) => theme.gridUnit * 4}px;
 `;
 
+const Leftdiv = styled.div`
+  background: ${({ theme }) => theme.colors.primary.base};
+  width: 50px;
+  min-height: 100vh;
+  height: 100%;
+  float: left;
+`;
+
 export default function App({ user }: AppProps) {
   return (
-    <div className="container app">
-      <Row gutter={16}>
-        <Col xs={24} md={6}>
-          <UserInfo user={user} />
-        </Col>
-        <Col xs={24} md={18}>
-          <Tabs centered>
-            <StyledTabPane
-              key="1"
-              tab={
-                <div>
-                  <i className="fa fa-star" /> {t('Favorites')}
-                </div>
-              }
-            >
-              <Favorites user={user} />
-            </StyledTabPane>
-            <StyledTabPane
-              key="2"
-              tab={
-                <div>
-                  <i className="fa fa-paint-brush" /> {t('Created content')}
-                </div>
-              }
-            >
-              <CreatedContent user={user} />
-            </StyledTabPane>
-            <StyledTabPane
-              key="3"
-              tab={
-                <div>
-                  <i className="fa fa-list" /> {t('Recent activity')}
-                </div>
-              }
-            >
-              <RecentActivity user={user} />
-            </StyledTabPane>
-            <StyledTabPane
-              key="4"
-              tab={
-                <div>
-                  <i className="fa fa-lock" /> {t('Security & Access')}
-                </div>
-              }
-            >
-              <Security user={user} />
-            </StyledTabPane>
-          </Tabs>
-        </Col>
-      </Row>
+    <div style={{ display: 'flex' }}>
+      <Leftdiv />
+      <div className="container app">
+        <Row gutter={16}>
+          <Col xs={24} md={6}>
+            <UserInfo user={user} />
+          </Col>
+          <Col xs={24} md={18}>
+            <Tabs centered>
+              <StyledTabPane
+                key="1"
+                tab={
+                  <div>
+                    <i className="fa fa-star" /> {t('Favorites')}
+                  </div>
+                }
+              >
+                <Favorites user={user} />
+              </StyledTabPane>
+              <StyledTabPane
+                key="2"
+                tab={
+                  <div>
+                    <i className="fa fa-paint-brush" /> {t('Created content')}
+                  </div>
+                }
+              >
+                <CreatedContent user={user} />
+              </StyledTabPane>
+              <StyledTabPane
+                key="3"
+                tab={
+                  <div>
+                    <i className="fa fa-list" /> {t('Recent activity')}
+                  </div>
+                }
+              >
+                <RecentActivity user={user} />
+              </StyledTabPane>
+              <StyledTabPane
+                key="4"
+                tab={
+                  <div>
+                    <i className="fa fa-lock" /> {t('Security & Access')}
+                  </div>
+                }
+              >
+                <Security user={user} />
+              </StyledTabPane>
+            </Tabs>
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }

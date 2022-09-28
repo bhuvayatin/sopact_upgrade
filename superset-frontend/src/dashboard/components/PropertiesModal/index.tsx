@@ -100,9 +100,14 @@ const PropertiesModal = ({
   const [dashboardInfo, setDashboardInfo] = useState<DashboardInfo>();
   const [owners, setOwners] = useState<Owners>([]);
   const [roles, setRoles] = useState<Roles>([]);
+  const [customcolorScheme, setCustomcolrScheme] = useState<any>([]);
   const saveLabel = onlyApply ? t('Apply') : t('Save');
   const categoricalSchemeRegistry = getCategoricalSchemeRegistry();
 
+  console.log(
+    '🚀 ~ file: index.tsx ~ line 104 ~ customcolorScheme',
+    customcolorScheme,
+  );
   const handleErrorResponse = async (response: Response) => {
     const { error, statusText, message } = await getClientErrorObject(response);
     let errorText = error || statusText || t('An error has occurred');
@@ -392,6 +397,11 @@ const PropertiesModal = ({
     }
   };
 
+  const onchangecolor = (e: any) => {
+    setCustomcolrScheme(e.target.value.split(','));
+    console.log(e.target.value.split(','));
+  };
+
   const getRowsWithoutRoles = () => {
     const jsonMetadataObj = getJsonMetadata();
     const hasCustomLabelColors = !!Object.keys(
@@ -418,6 +428,21 @@ const PropertiesModal = ({
           <p className="help-block">
             {t(
               'Owners is a list of users who can alter the dashboard. Searchable by name or username.',
+            )}
+          </p>
+        </Col>
+        <Col xs={24} md={12}>
+          <h3 style={{ marginTop: '0px' }}>{t('Add Custom Colors')}</h3>
+          <StyledFormItem label={t('Color')}>
+            <Input
+              type="text"
+              placeholder="#ffffff,#000000"
+              onChange={onchangecolor}
+            />
+          </StyledFormItem>
+          <p className="help-block">
+            {t(
+              'Please enter color code with comma(,) separated value like #ffffff, #000000',
             )}
           </p>
         </Col>
@@ -490,6 +515,21 @@ const PropertiesModal = ({
           </Col>
         </Row>
         <Row>
+          <Col xs={24} md={12}>
+            <h3 style={{ marginTop: '1em' }}>{t('Add Custom Colors')}</h3>
+            <StyledFormItem label={t('Color')}>
+              <Input
+                type="text"
+                placeholder="#ffffff,#000000"
+                onChange={onchangecolor}
+              />
+            </StyledFormItem>
+            <p className="help-block">
+              {t(
+                'Please enter color code with comma(,) separated value like #ffffff, #000000',
+              )}
+            </p>
+          </Col>
           <Col xs={24} md={12}>
             <ColorSchemeControlWrapper
               hasCustomLabelColors={hasCustomLabelColors}

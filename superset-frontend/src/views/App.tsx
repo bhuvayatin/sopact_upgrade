@@ -34,13 +34,14 @@ import setupApp from 'src/setup/setupApp';
 import setupPlugins from 'src/setup/setupPlugins';
 import { routes, isFrontendRoute } from 'src/views/routes';
 import { Logger } from 'src/logger/LogUtils';
+import { styled } from '@superset-ui/core';
 import { RootContextProviders } from './RootContextProviders';
 import { ScrollToTop } from './ScrollToTop';
 import QueryProvider from './QueryProvider';
+import '../assets/stylesheets/style.css';
 
 setupApp();
 setupPlugins();
-
 const user = { ...bootstrapData.user };
 const menu = {
   ...bootstrapData.common.menu_data,
@@ -59,6 +60,13 @@ const LocationPathnameLogger = () => {
   }, [location.pathname]);
   return <></>;
 };
+const Leftdiv = styled.div`
+  background: ${({ theme }) => theme.colors.primary.base};
+  width: 50px;
+  min-height: 100vh;
+  height: 100%;
+  float: left;
+`;
 
 const App = () => (
   <QueryProvider>
@@ -68,17 +76,22 @@ const App = () => (
       <RootContextProviders>
         <GlobalStyles />
         <Menu data={menu} isFrontendRoute={isFrontendRoute} />
-        <Switch>
-          {routes.map(({ path, Component, props = {}, Fallback = Loading }) => (
-            <Route path={path} key={path}>
-              <Suspense fallback={<Fallback />}>
-                <ErrorBoundary>
-                  <Component user={user} {...props} />
-                </ErrorBoundary>
-              </Suspense>
-            </Route>
-          ))}
-        </Switch>
+        <div>
+          <Leftdiv />
+          <Switch>
+            {routes.map(
+              ({ path, Component, props = {}, Fallback = Loading }) => (
+                <Route path={path} key={path}>
+                  <Suspense fallback={<Fallback />}>
+                    <ErrorBoundary>
+                      <Component user={user} {...props} />
+                    </ErrorBoundary>
+                  </Suspense>
+                </Route>
+              ),
+            )}
+          </Switch>
+        </div>
         <ToastContainer />
       </RootContextProviders>
     </Router>

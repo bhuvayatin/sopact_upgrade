@@ -342,37 +342,7 @@ function ChartList(props: ChartListProps) {
         accessor: 'last_saved_by.first_name',
         size: 'xl',
       },
-      {
-        Cell: ({
-          row: {
-            original: { last_saved_at: lastSavedAt },
-          },
-        }: any) => (
-          <span className="no-wrap">
-            {lastSavedAt ? moment.utc(lastSavedAt).fromNow() : null}
-          </span>
-        ),
-        Header: t('Last modified'),
-        accessor: 'last_saved_at',
-        size: 'xl',
-      },
-      {
-        accessor: 'owners',
-        hidden: true,
-        disableSortBy: true,
-      },
-      {
-        Cell: ({
-          row: {
-            original: { created_by: createdBy },
-          },
-        }: any) =>
-          createdBy ? `${createdBy.first_name} ${createdBy.last_name}` : '',
-        Header: t('Created by'),
-        accessor: 'created_by',
-        disableSortBy: true,
-        size: 'xl',
-      },
+
       {
         Cell: ({ row: { original } }: any) => {
           const handleDelete = () =>
@@ -459,6 +429,38 @@ function ChartList(props: ChartListProps) {
         id: 'actions',
         disableSortBy: true,
         hidden: !canEdit && !canDelete,
+        size: 'xl',
+      },
+      {
+        Cell: ({
+          row: {
+            original: { last_saved_at: lastSavedAt },
+          },
+        }: any) => (
+          <span className="no-wrap">
+            {lastSavedAt ? moment.utc(lastSavedAt).fromNow() : null}
+          </span>
+        ),
+        Header: t('Last modified'),
+        accessor: 'last_saved_at',
+        size: 'xl',
+      },
+      {
+        accessor: 'owners',
+        hidden: true,
+        disableSortBy: true,
+      },
+      {
+        Cell: ({
+          row: {
+            original: { created_by: createdBy },
+          },
+        }: any) =>
+          createdBy ? `${createdBy.first_name} ${createdBy.last_name}` : '',
+        Header: t('Created by'),
+        accessor: 'created_by',
+        disableSortBy: true,
+        size: 'xl',
       },
     ],
     [
