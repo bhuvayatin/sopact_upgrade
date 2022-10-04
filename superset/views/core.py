@@ -2695,7 +2695,8 @@ class Superset(BaseSupersetView):  # pylint: disable=too-many-public-methods
         """Personalized welcome page"""
         if not g.user or not get_user_id():
             if conf["PUBLIC_ROLE_LIKE"]:
-                return self.render_template("superset/public_welcome.html")
+                 return redirect(appbuilder.get_url_for_login)
+                # return self.render_template("superset/public_welcome.html")
             return redirect(appbuilder.get_url_for_login)
 
         welcome_dashboard_id = (
